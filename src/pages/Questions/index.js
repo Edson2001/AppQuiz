@@ -2,19 +2,39 @@ import React, {useState} from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
 import {Appbar, TextInput} from "react-native-paper"
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import QuestionsNext from "../../settings/quiz"
 
 import styles from "./style"
 
 export default function Questions({navigation, route}) {
     
     const [answer, setAnswer] = useState('')
-
+    const Itens = QuestionsNext
+    let nextQuestion  = 0
     const Test = ()=>{
     
         console.log(route.params.answer)
         if(route.params.answer == answer){
 
             Alert.alert("Certo")
+
+            Itens.map(e=>{
+
+                //verifica qual é a proxima pergunta
+                if(e.id == route.params.id){
+
+                    nextQuestion = e.id +1
+                    
+
+                } 
+
+                //mostra a nova pergunta
+                if(e.id == nextQuestion){
+                  //  route.params = e
+                  navigation.navigate("Questions", e)
+                }
+
+            })
 
         }else{
             Alert.alert("Errado")
